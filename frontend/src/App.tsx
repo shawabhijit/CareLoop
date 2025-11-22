@@ -1,12 +1,22 @@
+import Footer from "./components/footer/Footer";
+import HeroSection from "./components/HeroPage/HeroSection";
+
 
 
 function App() {
+  
   return (
-    <div className="h-screen w-screen flex flex-col gap-5 justify-center items-center bg-gray-900 text-white">
-      <h1 className="font-bold text-6xl">CareLoop</h1>
-      <p className="text-gray-400">One platform where people can access care, medicine, and human help — effortlessly.</p>
+    <div className="overflow-hidden">
+      <HeroSection />
+      <Footer />
     </div>
-  )
+  );
 }
 
 export default App
+
+
+
+
+
+

@@ -1,7 +1,33 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Alegreya-Sans-SC";
+  src: url("/fonts/Alegreya_Sans_SC/AlegreyaSansSC-Black.ttf") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Alegreya-Sans-SC', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #F9D000;
+  border-radius: 4px;
+}
+
+::selection {
+  background: #F9D000;
+  color: #000;
 }
