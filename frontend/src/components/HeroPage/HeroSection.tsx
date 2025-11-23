@@ -1,7 +1,7 @@
 import { BrainCog } from "lucide-react";
 import { Navbar } from "../Header/Navbar";
 import { useState } from "react";
-import { LoginModal } from "../Header/LoginModel";
+import LoginModal  from "../Header/LoginModel";
 
 const BACKGROUND_IMAGE_URL = './heroBackground.png'; // Path to the background image
 const RED_CTA_COLOR = '#E74C3C'; 
@@ -10,7 +10,7 @@ const HeroSection = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
         <div
-            className="h-screen w-screen text-gray-900 relative " // Prevents external scrolling
+            className="h-screen w-screen text-gray-900 relative" // Prevents external scrolling
             style={{
                 backgroundImage: `url(${BACKGROUND_IMAGE_URL})`, // Set the image background
                 backgroundSize: 'cover',
@@ -22,7 +22,7 @@ const HeroSection = () => {
             {/* Attach the separate, absolutely positioned navigation component */}
             <Navbar setIsModalOpen={setIsModalOpen} />
             <LoginModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
-            <div className="absolute top-0 left-0 h-full w-full pointer-events-none">
+            <div className="absolute top-0 left-0 h-full w-full pointer-events-none z-0">
                 {/* Panel 1 (Farthest back) - Subtle shadow on the page edge */}
                 <div
                     className="absolute top-0 left-0 h-full bg-white/70 shadow-2xl"
@@ -44,8 +44,8 @@ const HeroSection = () => {
                 />
             </div>
 
-            <main className="relative z-50 max-w-7xl h-full mx-auto px-8 md:px-12 pt-48 pb-8 md:pt-40 lg:pt-32">
-                <div className="flex justify-center lg:pl-30">
+            <main className="relative z-50 max-w-7xl h-full mx-auto px-8 md:px-12 pt-12 pb-8">
+                <div className="flex justify-center md:pl-40 lg:pl-30">
                     <div className="w-full lg:w-4/5 xl:w-3/4 ">
 
                         {/* Pre-header */}

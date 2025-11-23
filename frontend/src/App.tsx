@@ -6,7 +6,7 @@ import HeroSection from "./components/HeroPage/HeroSection";
 function App() {
   
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden ">
       <HeroSection />
       <Footer />
     </div>
