@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { isAuthenticated, getUserData, logout } from '../../utils/auth';
+import { motion } from 'framer-motion';
 
 
 export const Navbar = ({ setIsModalOpen }: { setIsModalOpen: (isOpen: boolean) => void }) => {
@@ -42,10 +43,10 @@ export const Navbar = ({ setIsModalOpen }: { setIsModalOpen: (isOpen: boolean) =
     };
 
     return (
-        <header className="relative top-0 left-0 right-0 p-4 md:p-8 z-50">
+        <header className="fixed top-0 left-0 right-0 p-4 md:p-8 z-50">
             <div className="max-w-400 mx-auto flex justify-between items-center">
                 <div className="flex items-center space-x-1">
-                    <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
+                    <h1 className="text-3xl font-extrabold tracking-tight text-white">
                         Care<span className="text-[#F9D000]">Loop</span> AI
                     </h1>
                 </div>
@@ -96,15 +97,17 @@ export const Navbar = ({ setIsModalOpen }: { setIsModalOpen: (isOpen: boolean) =
                         )}
                     </div>
                 ) : (
-                    <div
+                    <motion.div
                         onClick={(e) => {
                             e.preventDefault();
                             setIsModalOpen(true);
                         }}
-                        className="px-6 py-2 bg-black text-white font-semibold rounded-lg shadow-md hover:bg-gray-800 transition duration-300 text-sm tracking-widest uppercase active:scale-[.98] cursor-pointer"
+                        className="px-4 py-2 rounded-lg text-sm font-semibold border-2 border-[#F9D000] text-white transition-colors duration-300 hover:bg-[#F9D000] hover:text-gray-950"
+                        whileHover={{ scale: 1.05, boxShadow: "0 0 10px rgba(190, 242, 100, 0.5)" }}
+                        whileTap={{ scale: 0.95 }}
                     >
                         Login
-                    </div>
+                    </motion.div>
                 )}
             </div>
         </header>

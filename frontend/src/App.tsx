@@ -1,14 +1,16 @@
-import Footer from "./components/footer/Footer";
+// import Footer from "./components/footer/Footer";
 import HeroSection from "./components/HeroPage/HeroSection";
+import { Particles } from "./components/ui/particles";
 
 
 
 function App() {
   
   return (
-    <div className="overflow-hidden ">
+    <div className="overflow-hidden relative bg-black">
+      <Particles className="h-screen"/>
       <HeroSection />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
