@@ -1,104 +1,140 @@
-import { BrainCog } from "lucide-react";
-import { Navbar } from "../Header/Navbar";
-import { useState } from "react";
-import { LoginModal } from "../Header/LoginModel";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Navbar } from '../Header/Navbar';
+import LoginModel from '../Header/LoginModel';
 
-const BACKGROUND_IMAGE_URL = './heroBackground.png'; // Path to the background image
-const RED_CTA_COLOR = '#E74C3C'; 
+// --- Constants ---
+const ACCENT_COLOR = 'text-[#F9D000]';
+const GRADIENT_BUTTON = 'bg-gradient-to-r from-indigo-600 to-fuchsia-500 hover:from-indigo-700 hover:to-fuchsia-600';
 
-const HeroSection = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+const container = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.5,
+        },
+    },
+};
+
+const primaryText = "CareLoop (Your AI-Driven Healthcare Ecosystem)";
+const highlightedTagline = "One platform where people can access care, medicine, and human help — effortlessly.";
+
+const HighlightedTagline = ({ text } : any) => {
+    const parts = text.split('—');
+    const mainPart = parts[0].trim().split(' ');
+    const secondaryPart = parts.length > 1 ? parts[1].trim() : '';
+
+    // Custom stagger container for the headline
+    const headlineContainer = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.05,
+                delayChildren: 0.2,
+            },
+        },
+    };
+
+    const word = {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+        },
+    };
+
     return (
-        <div
-            className="h-screen w-screen text-gray-900 relative " // Prevents external scrolling
-            style={{
-                backgroundImage: `url(${BACKGROUND_IMAGE_URL})`, // Set the image background
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundAttachment: 'fixed',
-            }}
+        <motion.div
+            className="text-white text-4xl sm:text-6xl lg:text-[5.5rem] font-extrabold tracking-tighter"
+            variants={headlineContainer}
+            initial="hidden"
+            animate="visible"
         >
-
-            {/* Attach the separate, absolutely positioned navigation component */}
-            <Navbar setIsModalOpen={setIsModalOpen} />
-            <LoginModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
-            <div className="absolute top-0 left-0 h-full w-full pointer-events-none">
-                {/* Panel 1 (Farthest back) - Subtle shadow on the page edge */}
-                <div
-                    className="absolute top-0 left-0 h-full bg-white/70 shadow-2xl"
-                    style={{
-                        width: '50vw',
-                        maxWidth: '300px',
-                        boxShadow: '0 0 50px rgba(0,0,0,0.08) inset, 5px 0 15px rgba(0,0,0,0.1)',
-                        zIndex: 10,
-                    }}
-                />
-                <div
-                    className="absolute top-0 left-0 h-full bg-white/50"
-                    style={{
-                        width: '2px',
-                        marginLeft: '50px',
-                        boxShadow: '1px 0 5px rgba(0,0,0,0.1)',
-                        zIndex: 20,
-                    }}
-                />
+            <div className="flex flex-wrap justify-center items-baseline">
+                {mainPart.map((wordText : any, index : any) => (
+                    <motion.span
+                        key={index}
+                        variants={word}
+                        className={`mr-2 ${index % 2 === 0 ? ACCENT_COLOR : 'text-white'}`} // Alternating color for high contrast
+                    >
+                        {wordText}
+                    </motion.span>
+                ))}
             </div>
+            {secondaryPart && (
+                <motion.p
+                    className="mt-4 text-lg sm:text-2xl tracking-tight  text-gray-300 max-w-2xl mx-auto"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.5, duration: 0.8 }}
+                >
+                    — effortlessly. ❤️
+                </motion.p>
+            )}
+        </motion.div>
+    );
+};
 
-            <main className="relative z-50 max-w-7xl h-full mx-auto px-8 md:px-12 pt-48 pb-8 md:pt-40 lg:pt-32">
-                <div className="flex justify-center lg:pl-30">
-                    <div className="w-full lg:w-4/5 xl:w-3/4 ">
+// Main App Component
+const HeroSection = () => {
+    const [isModelOpen, setIsModalOpen] = useState(false);
 
-                        {/* Pre-header */}
-                        <div
-                            className="inline-flex items-center gap-2 rounded-full bg-black text-white px-2 lg:px-4 py-1 mb-8 md:mb-2 lg:mb-0 cursor-alias"
-                        >
-                            <BrainCog className="text-[#F9D000]" />
-                            <span className="text-sm rounded-2xl font-bold uppercase tracking-widest">AI-Powered Healthcare Ecosystem</span>
-                        </div>
+    return (
+        // Make the outer div a flex column container to manage screen height
+        <div className="text-white h-screen font-inter overflow-x-hidden flex flex-col absolute inset-0">
+            {/* Subtle Grainy Texture Overlay for the dark aesthetic */}
+            <div className="absolute inset-0 z-0 opacity-[0.03]" style={{
+                backgroundImage: 'url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZmlsdGVyIGlkPSJnIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjY1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2ZmZiIgZmlsdGVyPSJ1cmwoI2cpIiBvcGFjaXR5PSIwLjMiLz48L3N2Zy4=")',
+                backgroundSize: 'cover'
+            }} />
+            <Navbar setIsModalOpen={setIsModalOpen} />
+            <LoginModel setIsModalOpen={setIsModalOpen} isModalOpen={isModelOpen} />
+            {/* Hero Section - flex-grow ensures it takes up all remaining vertical space */}
+            <main className="relative z-10 flex-grow flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 text-center max-w-7xl mx-auto w-full">
 
-                        {/* Main Headline */}
-                        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-extrabold mb-8"  >
-                            Care<span className="text-[#F9D000]">Loop</span>: Your
-                            <br />
-                            AI-Powered Health
-                            <br />
-                            Companion
-                        </h2>
+                {/* Subtitle/Primary Text */}
+                <motion.h1
+                    className="text-xl sm:text-2xl font-medium mb-4 tracking-wider text-gray-400"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.8, duration: 0.5 }}
+                >
+                    {primaryText}
+                </motion.h1>
 
-                        {/* Sub-text */}
-                        <p className="text-lg md:text-xl font-bold uppercase max-w-lg mb-12 md:mb-8 tracking-wider">
-                            One platform connecting local pharmacies, helpers, and users for a healthier community.
-                        </p>
+                {/* Highlighted Tagline */}
+                <HighlightedTagline text={highlightedTagline} />
 
-                        {/* CTA Buttons */}
-                        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-                            <button
-                                className="px-8 py-3 rounded-full font-semibold transition duration-300 transform shadow-xl hover:shadow-2xl hover:-translate-y-0.5 focus:outline-none focus:ring-4 min-w-[180px] text-lg uppercase tracking-wider"
-                                style={{
-                                    color: 'white',
-                                    background: 'linear-gradient(to right, rgba(20, 20, 20, 1) 0%, rgba(70, 70, 70, 1) 100%)',
-                                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
-                                }}
-                            >
-                                Our Features
-                            </button>
+                <motion.div
+                    className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mt-12"
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                >
+                    <motion.button
+                        //onClick={() => handleAction('Features')}
+                        className={`relative py-3 px-8 rounded-xl font-bold text-white transition duration-300 ease-in-out transform shadow-lg ${GRADIENT_BUTTON}`}
+                        whileHover={{ scale: 1.05, rotate: -1 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        Features
+                    </motion.button>
 
-                            <button
-                                className="px-8 py-3 rounded-full font-semibold transition duration-300 transform shadow-xl hover:shadow-2xl hover:-translate-y-0.5 focus:outline-none focus:ring-4 min-w-[180px] text-lg uppercase tracking-wider"
-                                style={{
-                                    color: 'white',
-                                    background: `linear-gradient(to right, ${RED_CTA_COLOR} 0%, rgba(255, 100, 100, 0.8) 100%)`,
-                                    boxShadow: `0 10px 15px -3px rgba(231, 76, 60, 0.4)`,
-                                }}
-                            >
-                                About Us
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                    <motion.button
+                        //onClick={() => handleAction('About')}
+                        className="relative py-3 px-8 rounded-xl font-bold text-white border-2 border-[#F9D000] transition duration-300 ease-in-out hover:bg-white/10"
+                        whileHover={{ scale: 1.05, rotate: 1 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        About Us
+                    </motion.button>
+                </motion.div>
             </main>
         </div>
     );
-}
+};
 
 export default HeroSection;
